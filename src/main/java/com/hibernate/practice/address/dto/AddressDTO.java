@@ -10,6 +10,8 @@ public class AddressDTO implements Serializable {
     private String street;
     private String city;
 
+    public AddressDTO() {
+    }
     public AddressDTO(Address address) {
         this.street = address.getStreet();
         this.city = address.getCity();

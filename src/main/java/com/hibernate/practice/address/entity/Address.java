@@ -1,11 +1,9 @@
 package com.hibernate.practice.address.entity;
 
-import com.hibernate.practice.author.entity.Author;
+import com.hibernate.practice.address.dto.AddressDTO;
 import com.hibernate.practice.models.Auditable;
 import jakarta.persistence.*;
 import lombok.Data;
-
-import java.io.Serializable;
 
 @Entity
 @Table(name = "ADDRESS")
@@ -23,4 +21,11 @@ public class Address extends Auditable {
 
     @Column(name = "CITY")
     private String city;
+
+    public Address() {
+    }
+    public Address(AddressDTO address) {
+        this.street = address.getStreet();
+        this.city = address.getCity();
+    }
 }
