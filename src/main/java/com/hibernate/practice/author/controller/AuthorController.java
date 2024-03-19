@@ -37,6 +37,18 @@ public class AuthorController {
         return ResponseEntity.accepted().body(author);
     }
 
+    @GetMapping("/find/with-pessimistic-write-lock/{id}")
+    public ResponseEntity<AuthorDTO> findAuthorWithPessimisticWriteLock(@PathVariable("id") Long id) {
+        AuthorDTO author = authorService.findAuthorWithPessimisticWriteLock(id);
+        return ResponseEntity.accepted().body(author);
+    }
+
+    @GetMapping("/find/with-pessimistic-read-lock/{id}")
+    public ResponseEntity<AuthorDTO> findAuthorWithPessimisticReadLock(@PathVariable("id") Long id) {
+        AuthorDTO author = authorService.findAuthorWithPessimisticReadLock(id);
+        return ResponseEntity.accepted().body(author);
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Boolean> deleteAuthor(@PathVariable("id") Long id) {
         authorService.deleteAuthor(id);

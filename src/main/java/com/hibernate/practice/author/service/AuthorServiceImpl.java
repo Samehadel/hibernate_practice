@@ -80,4 +80,26 @@ public class AuthorServiceImpl implements AuthorService {
             return ResponseEntity.badRequest().build();
         }
     }
+
+    @Transactional
+    @Override
+    public AuthorDTO findAuthorWithPessimisticWriteLock(Long id) {
+        AuthorDTO authorDTO = null;
+        Author author = authorRepository.findByIdWithPessimisticWriteLock(id);
+        if (author != null) {
+            authorDTO = new AuthorDTO(author);
+        }
+        return authorDTO;
+    }
+
+    @Transactional
+    @Override
+    public AuthorDTO findAuthorWithPessimisticReadLock(Long id) {
+        AuthorDTO authorDTO = null;
+        Author author = authorRepository.findByIdWithPessimisticReadLock(id);
+        if (author != null) {
+            authorDTO = new AuthorDTO(author);
+        }
+        return authorDTO;
+    }
 }

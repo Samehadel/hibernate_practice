@@ -20,4 +20,12 @@ public interface AuthorRepository extends JpaRepository<Author, Long> {
     @Lock(LockModeType.OPTIMISTIC)
     @Query("SELECT A FROM Author A WHERE A.id = :id")
     Author findByIdWithOptimisticLock(@Param("id") Long id);
+
+    @Lock(LockModeType.PESSIMISTIC_WRITE)
+    @Query("SELECT A FROM Author A WHERE A.id = :id")
+    Author findByIdWithPessimisticWriteLock(@Param("id") Long id);
+
+    @Lock(LockModeType.PESSIMISTIC_READ)
+    @Query("SELECT A FROM Author A WHERE A.id = :id")
+    Author findByIdWithPessimisticReadLock(@Param("id") Long id);
 }

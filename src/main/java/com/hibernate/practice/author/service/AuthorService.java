@@ -11,4 +11,7 @@ public interface AuthorService {
     AuthorDTO findAuthorWithOptimisticLock(Long id);
 
     ResponseEntity<Long> createAuthor(AuthorDTO authorDTO);
+
+    AuthorDTO findAuthorWithPessimisticWriteLock(Long id);
+    AuthorDTO findAuthorWithPessimisticReadLock(Long id);
 }
