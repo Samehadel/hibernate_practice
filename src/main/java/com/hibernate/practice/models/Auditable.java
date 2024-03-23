@@ -25,7 +25,6 @@ public class Auditable {
     @Column(name = "LAST_MODIFIED_BY")
     private String lastModifiedBy;
 
-    @Version
     @LastModifiedDate
     @Temporal(value = TemporalType.TIMESTAMP)
     @Column(name = "LAST_MODIFIED_DATE")

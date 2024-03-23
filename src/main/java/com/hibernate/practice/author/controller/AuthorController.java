@@ -12,14 +12,28 @@ import java.util.Optional;
 @Controller
 @RequestMapping("/authors")
 public class AuthorController {
+    private final AuthorService authorService;
 
     @Autowired
-    private AuthorService authorService;
-
+    public AuthorController(AuthorService authorService) {
+        this.authorService = authorService;
+    }
 
     @GetMapping("/find/{id}")
     public ResponseEntity<AuthorDTO> findAuthor(@PathVariable("id") Long id) {
-        AuthorDTO author = authorService.findAuthor(id);
+        AuthorDTO author = authorService.findAuthorWithOptimisticLock(id);
+        return ResponseEntity.accepted().body(author);
+    }
+
+    @GetMapping("/find/with-optimistic-lock/{id}")
+    public ResponseEntity<AuthorDTO> findAuthorWithOptimisticLock(@PathVariable("id") Long id) {
+        AuthorDTO author = authorService.findAuthorWithOptimisticLock(id);
+        return ResponseEntity.accepted().body(author);
+    }
+
+    @GetMapping("/find/with-optimistic-force-lock/{id}")
+    public ResponseEntity<AuthorDTO> findAuthorWithOptimisticForceLock(@PathVariable("id") Long id) {
+        AuthorDTO author = authorService.findAuthorWithOptimisticForceLock(id);
         return ResponseEntity.accepted().body(author);
     }
 
@@ -33,5 +47,10 @@ public class AuthorController {
     public ResponseEntity<Boolean> updateAuthorName(@PathVariable("id") Long id, @PathVariable("authorName") String authorName) {
         authorService.updateAuthorName(id, authorName);
         return ResponseEntity.of(Optional.of(true));
+    }
+
+    @PostMapping("/create")
+    public ResponseEntity<Long> createAuthor(@RequestBody AuthorDTO authorDTO) {
+        return authorService.createAuthor(authorDTO);
     }
 }

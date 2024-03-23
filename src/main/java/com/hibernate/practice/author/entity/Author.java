@@ -1,6 +1,7 @@
 package com.hibernate.practice.author.entity;
 
 import com.hibernate.practice.address.entity.Address;
+import com.hibernate.practice.author.dto.AuthorDTO;
 import com.hibernate.practice.books.entity.Book;
 import com.hibernate.practice.models.Auditable;
 import jakarta.persistence.*;
@@ -18,6 +19,9 @@ import java.util.Set;
 @Table(name = "AUTHORS")
 @Data
 public class Author extends Auditable {
+
+    @Version
+    private Long version;
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "authorSequenceGenerator")
@@ -43,5 +47,14 @@ public class Author extends Auditable {
         if(book != null) {
             books.add(book);
         }
+    }
+
+    public Author() {
+    }
+
+    public Author (AuthorDTO authorDTO) {
+        this.name = authorDTO.getName();
+        this.email = authorDTO.getEmail();
+        this.address = new Address(authorDTO.getAddress());
     }
 }
