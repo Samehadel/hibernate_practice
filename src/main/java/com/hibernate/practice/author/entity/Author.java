@@ -6,15 +6,19 @@ import com.hibernate.practice.books.entity.Book;
 import com.hibernate.practice.models.Auditable;
 import jakarta.persistence.*;
 import lombok.Data;
-import org.hibernate.annotations.CreationTimestamp;
-import org.springframework.data.annotation.CreatedBy;
-import org.springframework.data.annotation.LastModifiedBy;
-import org.springframework.data.annotation.LastModifiedDate;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.annotations.NaturalId;
+import org.hibernate.annotations.NaturalIdCache;
 
-import java.sql.Timestamp;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
+@Cacheable
+@org.hibernate.annotations.Cache(
+        usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE,
+        region = "com.hibernate.practice.author.entity.Author"
+)
+@NaturalIdCache
 @Entity
 @Table(name = "AUTHORS")
 @Data
@@ -31,9 +35,13 @@ public class Author extends Auditable {
     @Column(name = "NAME")
     private String name;
 
-    @CollectionTable(name = "BOOKS", joinColumns = @JoinColumn(name = "AUTHOR_ID"))
-    @ElementCollection
-    private Set<Book> books = new HashSet<>();
+    @org.hibernate.annotations.Cache(
+            usage = CacheConcurrencyStrategy.READ_ONLY,
+            region = "com.hibernate.practice.books.entity.Book"
+    )
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "AUTHOR_ID", nullable = false)
+    private List<Book> books;
 
     @OneToOne(fetch = FetchType.LAZY,
             cascade = {CascadeType.PERSIST, CascadeType.MERGE})
@@ -41,9 +49,14 @@ public class Author extends Auditable {
     private Address address;
 
     @Column(name = "EMAIL", unique = true, nullable = false)
+    @NaturalId
     private String email;
 
     public void addBook(Book book) {
+        if (this.books == null) {
+            this.books = new ArrayList<>();
+        }
+
         if(book != null) {
             books.add(book);
         }

@@ -12,22 +12,4 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
 class HibernatePracticeApplicationTests {
-	/*@Autowired
-	private AuthorRepository authorRepository;
-
-	EntityManagerFactory emf = Persistence.createEntityManagerFactory("jpa-example");
-
-	@Test
-	void contextLoads() {
-	}
-
-	@Test
-	public void testGetReference() {
-		Author reference = authorRepository.getReference(1L);
-		PersistenceUnitUtil persistenceUnitUtil = emf.getPersistenceUnitUtil();
-		boolean loaded = persistenceUnitUtil.isLoaded(reference);
-		Assertions.assertFalse(loaded);
-
-	}*/
-
 }

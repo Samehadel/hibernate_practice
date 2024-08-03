@@ -21,7 +21,13 @@ public class AuthorController {
 
     @GetMapping("/find/{id}")
     public ResponseEntity<AuthorDTO> findAuthor(@PathVariable("id") Long id) {
-        AuthorDTO author = authorService.findAuthorWithOptimisticLock(id);
+        AuthorDTO author = authorService.findAuthor(id);
+        return ResponseEntity.accepted().body(author);
+    }
+
+    @GetMapping("/find/by/email/{email}")
+    public ResponseEntity<AuthorDTO> findAuthor(@PathVariable("email") String email) {
+        AuthorDTO author = authorService.findByEmail(email);
         return ResponseEntity.accepted().body(author);
     }
 

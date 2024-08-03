@@ -32,12 +32,6 @@
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
 
-		<!--<dependency>
-			<groupId>com.h2database</groupId>
-			<artifactId>h2</artifactId>
-			<scope>runtime</scope>
-		</dependency>-->
-		<!-- https://mvnrepository.com/artifact/org.postgresql/postgresql -->
 		<dependency>
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
@@ -54,7 +48,21 @@
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 		</dependency>
+
+		<dependency>
+			<groupId>org.redisson</groupId>
+			<artifactId>redisson-hibernate-53</artifactId>
+			<version>3.19.0</version>
+		</dependency>
 	</dependencies>
+
+	<distributionManagement>
+		<repository>
+			<id>github_samehadel</id>
+			<name>GitHub Samehadel Apache Maven Packages</name>
+			<url>https://maven.pkg.github.com/Samehadel/hibernate_practice</url>
+		</repository>
+	</distributionManagement>
 
 	<build>
 		<plugins>

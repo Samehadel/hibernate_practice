@@ -4,7 +4,13 @@ import com.hibernate.practice.address.dto.AddressDTO;
 import com.hibernate.practice.models.Auditable;
 import jakarta.persistence.*;
 import lombok.Data;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
+@Cacheable
+@org.hibernate.annotations.Cache(
+        usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE,
+        region = "com.hibernate.practice.address.entity.Address"
+)
 @Entity
 @Table(name = "ADDRESS")
 @Data
